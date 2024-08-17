@@ -1,16 +1,20 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import {products} from './services/mock';
-import ProductList from './components/ProductList/ProductList';
+import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {HomeScreen} from './screens/HomeScreen/HomeScreen';
+import {CartScreen} from './screens/CartScreen/CartScreen';
+
+const Tab = createBottomTabNavigator();
 
 const App = (): React.JSX.Element => {
-  return <ProductList products={products} onProductPress={() => {}} />;
+  return (
+    <NavigationContainer>
+      <Tab.Navigator screenOptions={{headerShown: false}}>
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Cart" component={CartScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
 };
 
 export default App;

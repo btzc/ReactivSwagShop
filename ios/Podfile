@@ -26,6 +26,7 @@ target 'ReactivSwagShop' do
   target 'ReactivSwagShopTests' do
     inherit! :complete
     # Pods for testing
+    pod 'RNScreens', :path => '../node_modules/react-native-screens'
   end
 
   post_install do |installer|
