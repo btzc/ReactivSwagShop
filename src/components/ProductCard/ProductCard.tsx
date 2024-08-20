@@ -20,7 +20,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <Card onPress={onPress}>
       <Image source={{uri: imageUrl}} style={styles.image} />
-      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
+        {title}
+      </Text>
       <Text style={styles.price}>
         ${Number(amount).toFixed(2)} {currencyCode}
       </Text>
