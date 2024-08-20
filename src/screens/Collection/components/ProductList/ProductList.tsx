@@ -1,7 +1,7 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {ProductCard} from '../ProductCard/ProductCard';
-import {Money} from '../../types/product';
+import {Money} from '../../../../types/product';
 
 interface Product {
   id: string;
@@ -16,7 +16,7 @@ interface ProductListProps {
   onProductPress: () => void;
 }
 
-const ProductList: React.FC<ProductListProps> = ({
+export const ProductList: React.FC<ProductListProps> = ({
   products,
   onProductPress,
 }) => {
@@ -55,5 +55,3 @@ const styles = StyleSheet.create({
     margin: 5,
   },
 });
-
-export default ProductList;

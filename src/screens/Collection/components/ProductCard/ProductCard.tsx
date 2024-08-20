@@ -1,7 +1,7 @@
 import React from 'react';
-import Card from '../../polaris-at-home/Card/Card';
+import Card from '../../../../polaris-at-home/Card/Card';
 import {Text, Image, StyleSheet} from 'react-native';
-import {Money} from '../../types/product';
+import {Money} from '../../../../types/product';
 
 interface ProductCardProps {
   imageUrl: string;

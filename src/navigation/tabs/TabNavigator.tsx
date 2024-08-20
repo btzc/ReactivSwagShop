@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React from 'react';
-import {CartScreen} from '../../screens/CartScreen/CartScreen';
+import {CartScreen} from '../../screens/Cart/CartScreen';
 import type {NavigatorScreenParams} from '@react-navigation/native';
 import {
   CollectionNativeStackParamList,
