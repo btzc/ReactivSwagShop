@@ -13,7 +13,7 @@ interface Product {
 
 interface ProductListProps {
   products: Product[];
-  onProductPress: (id: string) => void;
+  onProductPress: () => void;
 }
 
 const ProductList: React.FC<ProductListProps> = ({
@@ -26,7 +26,7 @@ const ProductList: React.FC<ProductListProps> = ({
         imageUrl={item.imageUrl}
         title={item.title}
         price={item.price}
-        onPress={() => onProductPress(item.id)}
+        onPress={onProductPress}
       />
     </View>
   );
