@@ -12,7 +12,7 @@ export const ProductContext = createContext<ProductContextType | undefined>(
   undefined,
 );
 
-export const ProductsContextProvider = ({children}: {children: ReactNode}) => {
+export const ProductContextProvider = ({children}: {children: ReactNode}) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,12 +25,12 @@ export const ProductsContextProvider = ({children}: {children: ReactNode}) => {
         try {
           setLoading(true);
           const fetchedProducts = await fetchProducts();
-          setProducts(fetchedProducts);
-          setError(null);
-        } catch (err) {
-          setError('Failed to load products');
-        } finally {
           setLoading(false);
+          setError(null);
+          setProducts(fetchedProducts);
+        } catch (err) {
+          setLoading(false);
+          setError('Failed to load products');
         }
       };
 

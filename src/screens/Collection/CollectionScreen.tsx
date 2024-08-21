@@ -13,10 +13,6 @@ export const CollectionScreen = () => {
 
   const {products, loading, error} = useProducts();
 
-  console.log('HERE > PRODUCTS', products);
-  console.log('HERE > LOADING', loading);
-  console.log('HERE > ERROR', error);
-
   if (loading) {
     return <LoadingIndicator />;
   }

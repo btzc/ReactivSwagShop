@@ -6,7 +6,7 @@ import {
   CollectionNativeStackParamList,
   CollectionNavigator,
 } from '../stacks/CollectionNavigator';
-import {ProductsContextProvider} from '../../data/context/products/ProductContext';
+import {ProductContextProvider} from '../../data/context/products/ProductContext';
 
 type TabNavigationList = {
   Collection: NavigatorScreenParams<CollectionNativeStackParamList>;
@@ -17,11 +17,11 @@ const Tab = createBottomTabNavigator<TabNavigationList>();
 
 export const TabNavigator = () => {
   return (
-    <ProductsContextProvider>
+    <ProductContextProvider>
       <Tab.Navigator screenOptions={{headerShown: false}}>
         <Tab.Screen name="Collection" component={CollectionNavigator} />
         <Tab.Screen name="Cart" component={CartScreen} />
       </Tab.Navigator>
-    </ProductsContextProvider>
+    </ProductContextProvider>
   );
 };
