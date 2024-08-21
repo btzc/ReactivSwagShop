@@ -5,21 +5,31 @@ import {Product} from '../../types/product';
 import {CollectionNativeStackParamList} from '../../navigation/stacks/CollectionNavigator';
 import {Button} from '../../polaris-at-home/Button/Button';
 import {ProductDetailDescription} from './components/ProductDetailDescription';
+import {CartItem} from '../../types/cartItem';
+import {useCart} from '../../data/context/cart/hooks/useCart';
 
 export interface ProductDetailParams {
   product: Product;
 }
 
 export const ProductDetail = () => {
+  const {addToCart} = useCart();
   const {product} =
     useRoute<RouteProp<CollectionNativeStackParamList, 'ProductDetail'>>()
       .params;
 
-  const {imageUrl, title, price, description} = product;
+  const {id, imageUrl, title, price, description} = product;
   const {amount, currencyCode} = price;
 
   const handleAddToCart = () => {
-    alert('Added to cart!');
+    const productToAdd = {
+      id,
+      imageUrl,
+      title,
+      price,
+      quantity: 1,
+    } as CartItem;
+    addToCart(productToAdd);
   };
 
   return (

@@ -83,9 +83,9 @@ describe('ProductCard Navigation', () => {
 
     expect(queryByTestId('loading-indicator')).toBeTruthy();
 
-    const productCart = await waitFor(() => getByText('Product 1'));
+    const productCard = await waitFor(() => getByText('Product 1'));
 
-    fireEvent.press(productCart);
+    fireEvent.press(productCard);
 
     expect(mockNavigation.navigate).toHaveBeenCalledWith('ProductDetail', {
       product: mockProducts[0],

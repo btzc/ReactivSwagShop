@@ -1,40 +1,24 @@
 import React from 'react';
 import {CartRemoveButton} from '../CartRemoveButton/CartRemoveButton';
-import {FlatList, View, Image, Text, StyleSheet} from 'react-native';
-
-const MOCK_CART_ITEMS = [
-  {
-    availableForSale: true,
-    description:
-      "Made to be stylish as well as comfortable, the Independent Trading Co. SS4500 personalized hooded sweatshirt delivers on all fronts. Made from an 80% - 20% cotton/polyester blend, it strikes the perfect balance between cozy and stretchy. What's more, the metal eyelets for your hoodie drawstrings add durability while the jersey-lined hood keeps you nice & warm when it’s needed. .: 80% cotton, 20 % polyester fleece with 100% cotton face (fiber content may vary for different colors).: Medium-heavy fabric (8.5 oz /yd² (280 g/m²)).: Regular fit.: Tear-away label",
-    id: '1',
-    imageUrl:
-      'https://cdn.shopify.com/s/files/1/0654/2458/8973/files/15432182594235543675_2048_1180x400.jpg?v=1713378389',
-    price: {
-      amount: '28.96',
-      currencyCode: 'CAD',
-    },
-    title: 'Product 1',
-    quantity: 2,
-  },
-  {
-    availableForSale: true,
-    description:
-      "Made to be stylish as well as comfortable, the Independent Trading Co. SS4500 personalized hooded sweatshirt delivers on all fronts. Made from an 80% - 20% cotton/polyester blend, it strikes the perfect balance between cozy and stretchy. What's more, the metal eyelets for your hoodie drawstrings add durability while the jersey-lined hood keeps you nice & warm when it’s needed. .: 80% cotton, 20 % polyester fleece with 100% cotton face (fiber content may vary for different colors).: Medium-heavy fabric (8.5 oz /yd² (280 g/m²)).: Regular fit.: Tear-away label",
-    id: '2',
-    imageUrl:
-      'https://cdn.shopify.com/s/files/1/0654/2458/8973/files/107112-hoodie-mockup_1180x400.png.jpg?v=1719328890',
-    price: {
-      amount: '28.96',
-      currencyCode: 'CAD',
-    },
-    title: 'Product 2',
-    quantity: 1,
-  },
-];
+import {FlatList, View, Image, Text, StyleSheet, Alert} from 'react-native';
+import {CartItem} from '../../../../types/cartItem';
+import {useCart} from '../../../../data/context/cart/hooks/useCart';
 
 export const CartProductList = () => {
-  const renderCartItem = ({item}: {item: any}) => (
+  const {removeFromCart, cartItems} = useCart();
+
+  const confirmRemoveItem = (productId: string) => {
+    Alert.alert(
+      'Remove Item',
+      'Are you sure you want to remove this item from the cart?',
+      [
+        {text: 'Cancel', style: 'cancel'},
+        {text: 'Remove', onPress: () => removeFromCart(productId)},
+      ],
+    );
+  };
+
+  const renderCartItem = ({item}: {item: CartItem}) => (
     <View style={styles.cartItem}>
       <Image source={{uri: item.imageUrl}} style={styles.productImage} />
       <View style={styles.productDetails}>
@@ -43,14 +27,14 @@ export const CartProductList = () => {
           ${Number(item.price.amount).toFixed(2)}
         </Text>
         <Text style={styles.productQuantity}>Quantity: {item.quantity}</Text>
-        <CartRemoveButton />
+        <CartRemoveButton removeFromCart={() => confirmRemoveItem(item.id)} />
       </View>
     </View>
   );
 
   return (
     <FlatList
-      data={MOCK_CART_ITEMS}
+      data={cartItems}
       keyExtractor={item => item.id}
       renderItem={renderCartItem}
       contentContainerStyle={styles.cartList}
