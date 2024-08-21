@@ -11,8 +11,10 @@ export const CollectionScreen = () => {
   return (
     <ProductList
       products={products}
-      onProductPress={() => {
-        navigate('ProductDetail');
+      onProductPress={product => {
+        navigate('ProductDetail', {
+          product,
+        });
       }}
     />
   );

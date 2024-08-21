@@ -1,24 +1,21 @@
 import React from 'react';
 import Card from '../../../../polaris-at-home/Card/Card';
 import {Text, Image, StyleSheet} from 'react-native';
-import {Money} from '../../../../types/product';
+import {Product} from '../../../../types/product';
 
 interface ProductCardProps {
-  imageUrl: string;
-  title: string;
-  price: Money;
-  onPress: () => void;
+  product: Product;
+  onPress: (product: Product) => void;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({
-  imageUrl,
-  title,
-  price,
+  product,
   onPress,
-}) => {
+}: ProductCardProps) => {
+  const {imageUrl, title, price} = product;
   const {amount, currencyCode} = price;
   return (
-    <Card onPress={onPress}>
+    <Card onPress={() => onPress(product)}>
       <Image source={{uri: imageUrl}} style={styles.image} />
       <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
         {title}

@@ -1,11 +1,14 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {ProductDetail} from '../../screens/Collection/components/ProductDetail/ProductDetail';
+import {
+  ProductDetail,
+  ProductDetailParams,
+} from '../../screens/ProductDetail/ProductDetail';
 import {CollectionScreen} from '../../screens/Collection/CollectionScreen';
 
 export type CollectionNativeStackParamList = {
   Collection: undefined;
-  ProductDetail: undefined;
+  ProductDetail: ProductDetailParams;
 };
 
 const CollectionNativeStack = createNativeStackNavigator();

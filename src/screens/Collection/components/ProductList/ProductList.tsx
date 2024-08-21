@@ -1,19 +1,11 @@
 import React from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {ProductCard} from '../ProductCard/ProductCard';
-import {Money} from '../../../../types/product';
-
-interface Product {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  price: Money;
-}
+import {Product} from '../../../../types/product';
 
 interface ProductListProps {
   products: Product[];
-  onProductPress: () => void;
+  onProductPress: (product: Product) => void;
 }
 
 export const ProductList: React.FC<ProductListProps> = ({
@@ -22,12 +14,7 @@ export const ProductList: React.FC<ProductListProps> = ({
 }) => {
   const renderItem = ({item}: {item: Product}) => (
     <View style={styles.cardWrapper}>
-      <ProductCard
-        imageUrl={item.imageUrl}
-        title={item.title}
-        price={item.price}
-        onPress={onProductPress}
-      />
+      <ProductCard product={item} onPress={onProductPress} />
     </View>
   );
 
