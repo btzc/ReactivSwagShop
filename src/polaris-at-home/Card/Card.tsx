@@ -5,11 +5,21 @@ import {StyleSheet, TouchableOpacity} from 'react-native';
 interface ProductCardProps {
   children: ReactNode;
   onPress: () => void;
+  accessibilityLabel?: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({children, onPress}) => {
+export const Card: React.FC<ProductCardProps> = ({
+  children,
+  onPress,
+  accessibilityLabel,
+}) => {
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={onPress}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}>
       {children}
     </TouchableOpacity>
   );
@@ -27,5 +37,3 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 });
-
-export default ProductCard;

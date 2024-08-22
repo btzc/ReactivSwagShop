@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../../../../polaris-at-home/Card/Card';
+import {Card} from '../../../../polaris-at-home/Card/Card';
 import {Text, Image, StyleSheet} from 'react-native';
 import {Product} from '../../../../types/product';
 

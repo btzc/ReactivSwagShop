@@ -1,23 +1,28 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {TouchableOpacity, Text} from 'react-native';
+import {StyleSheet, TouchableOpacity, Text} from 'react-native';
 
 interface ButtonProps {
   onPress: () => void;
   text: string;
   disabled?: boolean;
+  accessibilityLabel?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
   onPress,
   text,
   disabled = false,
+  accessibilityLabel,
 }) => {
   return (
     <TouchableOpacity
       style={[styles.button, disabled && styles.buttonDisabled]}
       onPress={onPress}
-      disabled={disabled}>
+      disabled={disabled}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel || text}
+      accessibilityState={{disabled}}>
       <Text style={[styles.buttonText, disabled && styles.buttonTextDisabled]}>
         {text}
       </Text>
