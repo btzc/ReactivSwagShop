@@ -1,4 +1,4 @@
-interface SelectedOption {
+export interface SelectedOption {
   name: string;
   value: string;
 }
@@ -14,6 +14,7 @@ export interface ProductVariant {
 }
 
 export interface ProductOption {
+  id: string;
   name: string;
   values: string[];
 }

@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   quantityStepperText: {
-    fontSize: 18,
     fontWeight: 'bold',
   },
 });

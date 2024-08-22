@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 type QuantityStepperProps = {
   quantity: number;
@@ -18,9 +18,13 @@ export const QuantityStepper = ({
 }: QuantityStepperProps) => {
   return (
     <View style={styles.container}>
-      <Button disabled={disableDecrease} title="-" onPress={onDecrease} />
+      <TouchableOpacity disabled={disableDecrease} onPress={onDecrease}>
+        <Text style={styles.button}>-</Text>
+      </TouchableOpacity>
       <Text style={styles.quantity}>{quantity}</Text>
-      <Button disabled={disableIncrease} title="+" onPress={onIncrease} />
+      <TouchableOpacity disabled={disableIncrease} onPress={onIncrease}>
+        <Text style={styles.button}>+</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -28,12 +32,13 @@ export const QuantityStepper = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    width: 80,
+    width: 50,
+  },
+  button: {
+    color: '#0000FF',
   },
   quantity: {
     marginHorizontal: 10,
-    fontSize: 16,
   },
 });

@@ -25,7 +25,11 @@ export const mapRemoteProductToDomain = (
 
 const mapRemoteOptionToDomain = (
   remoteOption: RemoteProductOption,
-): ProductOption => ({name: remoteOption.name, values: remoteOption.values});
+): ProductOption => ({
+  id: remoteOption.id,
+  name: remoteOption.name,
+  values: remoteOption.values,
+});
 
 const mapRemoteVariantToDomain = (
   remoteVariant: RemoteProductVariant,
