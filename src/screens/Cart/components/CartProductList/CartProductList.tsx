@@ -23,12 +23,18 @@ export const CartProductList = () => {
     <View style={styles.cartItem}>
       <Image source={{uri: item.imageUrl}} style={styles.productImage} />
       <View style={styles.productDetails}>
-        <Text style={styles.productName}>{item.title}</Text>
+        <Text style={styles.productName}>{item.productTitle}</Text>
+        <Text style={styles.variantName}>{item.variantTitle}</Text>
         <Text style={styles.productPrice}>
           ${Number(item.price.amount).toFixed(2)}
         </Text>
-        <CartQuantityStepper quantity={item.quantity} itemId={item.id} />
-        <CartRemoveButton removeFromCart={() => confirmRemoveItem(item.id)} />
+        <CartQuantityStepper
+          quantity={item.quantity}
+          variantId={item.variantId}
+        />
+        <CartRemoveButton
+          removeFromCart={() => confirmRemoveItem(item.variantId)}
+        />
       </View>
     </View>
   );
@@ -36,7 +42,7 @@ export const CartProductList = () => {
   return (
     <FlatList
       data={cartItems}
-      keyExtractor={item => item.id}
+      keyExtractor={item => item.variantId}
       renderItem={renderCartItem}
       contentContainerStyle={styles.cartList}
     />
@@ -67,10 +73,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  productPrice: {
+  variantName: {
     fontSize: 14,
   },
-  productQuantity: {
+  productPrice: {
+    marginTop: 8,
     fontSize: 14,
   },
 });

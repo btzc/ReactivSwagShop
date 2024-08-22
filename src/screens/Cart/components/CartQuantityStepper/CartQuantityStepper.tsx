@@ -4,14 +4,14 @@ import {useCartQuantityStepper} from '../../hooks/useCartQuantityStepper';
 
 interface CartQuantityStepper {
   quantity: number;
-  itemId: string;
+  variantId: string;
 }
 
 export const CartQuantityStepper = ({
   quantity,
-  itemId,
+  variantId,
 }: CartQuantityStepper) => {
-  const {onIncrease, onDecrease} = useCartQuantityStepper({itemId});
+  const {onIncrease, onDecrease} = useCartQuantityStepper({variantId});
 
   return (
     <QuantityStepper

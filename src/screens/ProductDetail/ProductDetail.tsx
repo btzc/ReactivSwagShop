@@ -25,7 +25,7 @@ export const ProductDetail = () => {
     useRoute<RouteProp<CollectionNativeStackParamList, 'ProductDetail'>>()
       .params;
 
-  const {id, imageUrl, title, description, variants, options} = product;
+  const {id, title, description, variants, options} = product;
   const firstAvailableVariant = variants.find(
     variant => variant.availableForSale,
   );
@@ -74,8 +74,11 @@ export const ProductDetail = () => {
 
   const handleAddToCart = () => {
     const productToAdd = {
-      id,
-      imageUrl,
+      productId: id,
+      variantId: selectedVariant.id,
+      variantTitle: selectedVariant.title,
+      productTitle: title,
+      imageUrl: selectedVariant.imageUrl,
       title,
       price: selectedVariant.price,
       quantity,
@@ -91,7 +94,7 @@ export const ProductDetail = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image source={{uri: imageUrl}} style={styles.image} />
+      <Image source={{uri: selectedVariant.imageUrl}} style={styles.image} />
       <Text style={styles.title}>{title}</Text>
       <ProductDetailPrice
         availableForSale={selectedVariant.availableForSale}

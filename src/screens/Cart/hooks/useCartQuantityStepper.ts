@@ -1,18 +1,20 @@
 import {useCart} from '../../../data/context/cart/hooks/useCart';
 
 interface CartQuantityStepperParams {
-  itemId: string;
+  variantId: string;
 }
 
-export const useCartQuantityStepper = ({itemId}: CartQuantityStepperParams) => {
+export const useCartQuantityStepper = ({
+  variantId,
+}: CartQuantityStepperParams) => {
   const {incrementQuantity, decrementQuantity} = useCart();
 
   const onIncrease = () => {
-    incrementQuantity(itemId);
+    incrementQuantity(variantId);
   };
 
   const onDecrease = () => {
-    decrementQuantity(itemId);
+    decrementQuantity(variantId);
   };
 
   return {

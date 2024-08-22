@@ -20,11 +20,14 @@ export const CartContextProvider = ({children}: {children: ReactNode}) => {
   const addToCart = (item: CartItem) => {
     setCartItems(prevCartItems => {
       const existingItem = prevCartItems.find(
-        cartItem => cartItem.id === item.id,
+        cartItem =>
+          cartItem.productId === item.productId &&
+          cartItem.variantId === item.variantId,
       );
       if (existingItem) {
         const newCart = prevCartItems.map(cartItem =>
-          cartItem.id === item.id
+          cartItem.productId === item.productId &&
+          cartItem.variantId === item.variantId
             ? {...cartItem, quantity: cartItem.quantity + item.quantity}
             : cartItem,
         ) as CartItem[];
@@ -35,26 +38,30 @@ export const CartContextProvider = ({children}: {children: ReactNode}) => {
     });
   };
 
-  const incrementQuantity = (itemId: string) => {
+  const incrementQuantity = (itemVariantId: string) => {
     setCartItems(prevItems =>
       prevItems.map(item =>
-        item.id === itemId ? {...item, quantity: item.quantity + 1} : item,
+        item.variantId === itemVariantId
+          ? {...item, quantity: item.quantity + 1}
+          : item,
       ),
     );
   };
 
-  const decrementQuantity = (itemId: string) => {
+  const decrementQuantity = (itemVariantId: string) => {
     setCartItems(prevItems =>
       prevItems.map(item =>
-        item.id === itemId && item.quantity > 1
+        item.variantId === itemVariantId && item.quantity > 1
           ? {...item, quantity: item.quantity - 1}
           : item,
       ),
     );
   };
 
-  const removeFromCart = (id: string) => {
-    setCartItems(prevCartItems => prevCartItems.filter(item => item.id !== id));
+  const removeFromCart = (variantId: string) => {
+    setCartItems(prevCartItems =>
+      prevCartItems.filter(item => item.variantId !== variantId),
+    );
   };
 
   const cartTotal = String(
