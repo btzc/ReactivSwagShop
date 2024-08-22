@@ -19,11 +19,15 @@ export const QuantityStepper = ({
   return (
     <View style={styles.container}>
       <TouchableOpacity disabled={disableDecrease} onPress={onDecrease}>
-        <Text style={styles.button}>-</Text>
+        <Text style={[styles.button, disableDecrease && styles.disabledButton]}>
+          -
+        </Text>
       </TouchableOpacity>
       <Text style={styles.quantity}>{quantity}</Text>
       <TouchableOpacity disabled={disableIncrease} onPress={onIncrease}>
-        <Text style={styles.button}>+</Text>
+        <Text style={[styles.button, disableIncrease && styles.disabledButton]}>
+          +
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -37,6 +41,9 @@ const styles = StyleSheet.create({
   },
   button: {
     color: '#0000FF',
+  },
+  disabledButton: {
+    color: '#a9a9a9',
   },
   quantity: {
     marginHorizontal: 10,
