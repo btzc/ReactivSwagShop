@@ -4,9 +4,11 @@ import {RouteProp, useRoute} from '@react-navigation/native';
 import {Product} from '../../types/product';
 import {CollectionNativeStackParamList} from '../../navigation/stacks/CollectionNavigator';
 import {Button} from '../../polaris-at-home/Button/Button';
-import {ProductDetailDescription} from './components/ProductDetailDescription';
+import {ProductDetailDescription} from './components/ProductDetailDescription/ProductDetailDescription';
 import {CartItem} from '../../types/cartItem';
 import {useCart} from '../../data/context/cart/hooks/useCart';
+import {ProductDetailQuantityStepper} from './components/ProductDetailQuantityStepper/ProductDetailQuantityStepper';
+import {useProductDetailQuantityStepper} from './hooks/useProductDetailQuantityStepper';
 
 export interface ProductDetailParams {
   product: Product;
@@ -14,6 +16,8 @@ export interface ProductDetailParams {
 
 export const ProductDetail = () => {
   const {addToCart} = useCart();
+  const {quantity, onIncrease, onDecrease} = useProductDetailQuantityStepper();
+
   const {product} =
     useRoute<RouteProp<CollectionNativeStackParamList, 'ProductDetail'>>()
       .params;
@@ -27,7 +31,7 @@ export const ProductDetail = () => {
       imageUrl,
       title,
       price,
-      quantity: 1,
+      quantity,
     } as CartItem;
     addToCart(productToAdd);
   };
@@ -39,6 +43,11 @@ export const ProductDetail = () => {
       <Text style={styles.price}>
         ${Number(amount).toFixed(2)} {currencyCode}
       </Text>
+      <ProductDetailQuantityStepper
+        quantity={quantity}
+        onIncrease={onIncrease}
+        onDecrease={onDecrease}
+      />
       <View style={styles.buttonContainer}>
         <Button onPress={handleAddToCart}>
           <Text style={styles.buttonText}>Add to Cart</Text>
@@ -72,7 +81,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingTop: 16,
-    paddingBottom: 16,
+    paddingBottom: 24,
     backgroundColor: '#fff',
   },
   buttonText: {

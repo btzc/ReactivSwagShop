@@ -14,6 +14,7 @@ export const ProductDetailDescription = ({
 
   return (
     <>
+      <Text style={styles.title}>Description</Text>
       <Text
         style={styles.description}
         numberOfLines={isExpanded ? undefined : 2}
@@ -28,6 +29,11 @@ export const ProductDetailDescription = ({
 };
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
   description: {
     fontSize: 16,
     marginBottom: 8,
