@@ -12,8 +12,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   product,
   onPress,
 }: ProductCardProps) => {
-  const {imageUrl, title, price} = product;
-  const {amount, currencyCode} = price;
+  const {imageUrl, title, variants} = product;
+  const firstAvailableVariant = variants.find(
+    variant => variant.availableForSale,
+  );
+  if (!firstAvailableVariant) {
+    return;
+  }
+  const {amount, currencyCode} = firstAvailableVariant.price;
   return (
     <Card onPress={() => onPress(product)}>
       <Image source={{uri: imageUrl}} style={styles.image} />

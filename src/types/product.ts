@@ -1,3 +1,23 @@
+interface SelectedOption {
+  name: string;
+  value: string;
+}
+
+export interface ProductVariant {
+  id: string;
+  title: string;
+  quantityAvailable: number;
+  availableForSale: boolean;
+  price: Money;
+  selectedOptions: SelectedOption[];
+  imageUrl: string;
+}
+
+export interface ProductOption {
+  name: string;
+  values: string[];
+}
+
 export interface Money {
   amount: string;
   currencyCode: string;
@@ -9,5 +29,6 @@ export interface Product {
   description: string;
   availableForSale: boolean;
   imageUrl: string;
-  price: Money;
+  options: ProductOption[];
+  variants: ProductVariant[];
 }

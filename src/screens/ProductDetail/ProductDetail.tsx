@@ -23,7 +23,13 @@ export const ProductDetail = () => {
     useRoute<RouteProp<CollectionNativeStackParamList, 'ProductDetail'>>()
       .params;
 
-  const {id, imageUrl, title, price, description, availableForSale} = product;
+  const {id, imageUrl, title, description, variants} = product;
+  const firstAvailableVariant = variants.find(
+    variant => variant.availableForSale,
+  );
+  const price = firstAvailableVariant?.price || variants[0].price;
+  const availableForSale =
+    firstAvailableVariant?.availableForSale || variants[0].availableForSale;
 
   const handleAddToCart = () => {
     const productToAdd = {

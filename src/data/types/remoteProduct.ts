@@ -21,7 +21,7 @@ interface Media {
   image: MediaImage;
 }
 
-interface ProductOption {
+export interface RemoteProductOption {
   id: string;
   name: string;
   values: string[];
@@ -32,7 +32,7 @@ interface SelectedOption {
   value: string;
 }
 
-interface ProductVariant {
+export interface RemoteProductVariant {
   id: string;
   title: string;
   quantityAvailable: number;
@@ -46,7 +46,7 @@ interface ProductVariant {
   product: {
     id: string;
     handle: string;
-    options: ProductOption[];
+    options: RemoteProductOption[];
   };
 }
 
@@ -68,10 +68,10 @@ export interface RemoteProduct {
   priceRange: ProductPriceRange;
   compareAtPriceRange: ProductPriceRange;
   images: ProductImage[];
-  options: ProductOption[];
+  options: RemoteProductOption[];
   requiresSellingPlan: boolean;
   onlineStoreUrl: string;
   media: Media[];
-  variants: ProductVariant[];
+  variants: RemoteProductVariant[];
   collections: string[];
 }

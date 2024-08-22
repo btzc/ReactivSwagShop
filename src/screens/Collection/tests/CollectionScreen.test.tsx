@@ -3,6 +3,7 @@ import {render, fireEvent, waitFor} from '@testing-library/react-native';
 import {CollectionScreen} from '../CollectionScreen';
 import {mockNavigation} from '../../../testUtils/mockNavigation';
 import {ProductContextProvider} from '../../../data/context/products/ProductContext';
+import {Money, Product, ProductVariant} from '../../../types/product';
 
 jest.mock('@react-navigation/native', () => {
   const actualNav = jest.requireActual('@react-navigation/native');
@@ -29,11 +30,22 @@ const mockProducts = [
       "Made to be stylish as well as comfortable, the Independent Trading Co. SS4500 personalized hooded sweatshirt delivers on all fronts. Made from an 80% - 20% cotton/polyester blend, it strikes the perfect balance between cozy and stretchy. What's more, the metal eyelets for your hoodie drawstrings add durability while the jersey-lined hood keeps you nice & warm when it’s needed. .: 80% cotton, 20 % polyester fleece with 100% cotton face (fiber content may vary for different colors).: Medium-heavy fabric (8.5 oz /yd² (280 g/m²)).: Regular fit.: Tear-away label",
     id: '1',
     imageUrl: 'url',
-    price: {
-      amount: '28.96',
-      currencyCode: 'CAD',
-    },
     title: 'Product 1',
+    options: [],
+    variants: [
+      {
+        id: 'variant-1',
+        title: 'Variant 1',
+        quantityAvailable: 5,
+        availableForSale: true,
+        price: {
+          amount: '28.96',
+          currencyCode: 'CAD',
+        } as Money,
+        selectedOptions: [],
+        imageUrl: 'url',
+      },
+    ] as ProductVariant[],
   },
   {
     availableForSale: true,
@@ -41,13 +53,24 @@ const mockProducts = [
       "Made to be stylish as well as comfortable, the Independent Trading Co. SS4500 personalized hooded sweatshirt delivers on all fronts. Made from an 80% - 20% cotton/polyester blend, it strikes the perfect balance between cozy and stretchy. What's more, the metal eyelets for your hoodie drawstrings add durability while the jersey-lined hood keeps you nice & warm when it’s needed. .: 80% cotton, 20 % polyester fleece with 100% cotton face (fiber content may vary for different colors).: Medium-heavy fabric (8.5 oz /yd² (280 g/m²)).: Regular fit.: Tear-away label",
     id: '2',
     imageUrl: 'url',
-    price: {
-      amount: '28.96',
-      currencyCode: 'CAD',
-    },
     title: 'Product 2',
+    options: [],
+    variants: [
+      {
+        id: 'variant-2',
+        title: 'Variant 2',
+        quantityAvailable: 5,
+        availableForSale: true,
+        price: {
+          amount: '28.96',
+          currencyCode: 'CAD',
+        } as Money,
+        selectedOptions: [],
+        imageUrl: 'url',
+      },
+    ] as ProductVariant[],
   },
-];
+] as Product[];
 
 describe('ProductCard Navigation', () => {
   beforeEach(() => {
