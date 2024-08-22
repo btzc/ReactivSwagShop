@@ -9,6 +9,7 @@ import {CartItem} from '../../types/cartItem';
 import {useCart} from '../../data/context/cart/hooks/useCart';
 import {ProductDetailQuantityStepper} from './components/ProductDetailQuantityStepper/ProductDetailQuantityStepper';
 import {useProductDetailQuantityStepper} from './hooks/useProductDetailQuantityStepper';
+import {ProductDetailPrice} from './components/ProductDetailPrice/ProductDetailPrice';
 
 export interface ProductDetailParams {
   product: Product;
@@ -22,8 +23,7 @@ export const ProductDetail = () => {
     useRoute<RouteProp<CollectionNativeStackParamList, 'ProductDetail'>>()
       .params;
 
-  const {id, imageUrl, title, price, description} = product;
-  const {amount, currencyCode} = price;
+  const {id, imageUrl, title, price, description, availableForSale} = product;
 
   const handleAddToCart = () => {
     const productToAdd = {
@@ -40,18 +40,20 @@ export const ProductDetail = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={{uri: imageUrl}} style={styles.image} />
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.price}>
-        ${Number(amount).toFixed(2)} {currencyCode}
-      </Text>
+      <ProductDetailPrice availableForSale={availableForSale} price={price} />
+
       <ProductDetailQuantityStepper
         quantity={quantity}
         onIncrease={onIncrease}
         onDecrease={onDecrease}
+        availableForSale={availableForSale}
       />
       <View style={styles.buttonContainer}>
-        <Button onPress={handleAddToCart}>
-          <Text style={styles.buttonText}>Add to Cart</Text>
-        </Button>
+        <Button
+          disabled={!availableForSale}
+          onPress={handleAddToCart}
+          text="Add to Cart"
+        />
       </View>
       <ProductDetailDescription description={description} />
     </ScrollView>
@@ -74,19 +76,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 8,
   },
-  price: {
-    fontSize: 20,
-    color: '#888',
-    marginBottom: 16,
-  },
   buttonContainer: {
     paddingTop: 16,
     paddingBottom: 24,
     backgroundColor: '#fff',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });

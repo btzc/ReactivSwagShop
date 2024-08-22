@@ -4,12 +4,14 @@ import {QuantityStepper} from '../../../../polaris-at-home/QuantityStepper/Quant
 
 interface ProductDetailQuantityStepperProps {
   quantity: number;
+  availableForSale: boolean;
   onIncrease: () => void;
   onDecrease: () => void;
 }
 
 export const ProductDetailQuantityStepper = ({
   quantity,
+  availableForSale,
   onIncrease,
   onDecrease,
 }: ProductDetailQuantityStepperProps) => {
@@ -20,7 +22,8 @@ export const ProductDetailQuantityStepper = ({
         quantity={quantity}
         onIncrease={onIncrease}
         onDecrease={onDecrease}
-        disabled={quantity === 1}
+        disableDecrease={quantity === 1 || !availableForSale}
+        disableIncrease={!availableForSale}
       />
     </View>
   );

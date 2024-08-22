@@ -5,20 +5,22 @@ type QuantityStepperProps = {
   quantity: number;
   onIncrease: () => void;
   onDecrease: () => void;
-  disabled?: boolean;
+  disableDecrease?: boolean;
+  disableIncrease?: boolean;
 };
 
 export const QuantityStepper = ({
   quantity,
   onIncrease,
   onDecrease,
-  disabled = false,
+  disableDecrease = false,
+  disableIncrease = false,
 }: QuantityStepperProps) => {
   return (
     <View style={styles.container}>
-      <Button disabled={disabled} title="-" onPress={onDecrease} />
+      <Button disabled={disableDecrease} title="-" onPress={onDecrease} />
       <Text style={styles.quantity}>{quantity}</Text>
-      <Button title="+" onPress={onIncrease} />
+      <Button disabled={disableIncrease} title="+" onPress={onIncrease} />
     </View>
   );
 };
