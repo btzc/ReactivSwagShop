@@ -3,6 +3,7 @@ import {CartRemoveButton} from '../CartRemoveButton/CartRemoveButton';
 import {FlatList, View, Image, Text, StyleSheet, Alert} from 'react-native';
 import {CartItem} from '../../../../types/cartItem';
 import {useCart} from '../../../../data/context/cart/hooks/useCart';
+import {CartQuantityStepper} from '../CartQuantityStepper/CartQuantityStepper';
 
 export const CartProductList = () => {
   const {removeFromCart, cartItems} = useCart();
@@ -26,7 +27,7 @@ export const CartProductList = () => {
         <Text style={styles.productPrice}>
           ${Number(item.price.amount).toFixed(2)}
         </Text>
-        <Text style={styles.productQuantity}>Quantity: {item.quantity}</Text>
+        <CartQuantityStepper quantity={item.quantity} itemId={item.id} />
         <CartRemoveButton removeFromCart={() => confirmRemoveItem(item.id)} />
       </View>
     </View>

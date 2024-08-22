@@ -6,13 +6,20 @@ import {useCart} from '../hooks/useCart';
 
 describe('CartContext', () => {
   const TestComponent = () => {
-    const {cartItems, addToCart, removeFromCart, cartTotal} = useCart();
+    const {
+      cartItems,
+      addToCart,
+      removeFromCart,
+      cartTotal,
+      incrementQuantity,
+      decrementQuantity,
+    } = useCart();
 
     return (
       <>
         {cartItems.map(item => (
           <Text key={item.id}>
-            {item.title} - ${item.price.amount}
+            {item.title} - ${item.price.amount} - {item.quantity}
           </Text>
         ))}
         <Text>Total: ${Number(cartTotal).toFixed(2)}</Text>
@@ -32,6 +39,14 @@ describe('CartContext', () => {
           }
         />
         <Button title="Remove Item" onPress={() => removeFromCart('1')} />
+        <Button
+          title="Increment Quantity"
+          onPress={() => incrementQuantity('1')}
+        />
+        <Button
+          title="Decrement Quantity"
+          onPress={() => decrementQuantity('1')}
+        />
       </>
     );
   };
@@ -47,7 +62,7 @@ describe('CartContext', () => {
 
     fireEvent.press(addButton);
 
-    expect(getByText('Test Product - $9.99')).toBeTruthy();
+    expect(getByText('Test Product - $9.99 - 1')).toBeTruthy();
   });
 
   it('should remove item from cart', async () => {
@@ -62,11 +77,11 @@ describe('CartContext', () => {
 
     fireEvent.press(addButton);
 
-    expect(getByText('Test Product - $9.99')).toBeTruthy();
+    expect(getByText('Test Product - $9.99 - 1')).toBeTruthy();
 
     fireEvent.press(removeButton);
 
-    expect(queryByText('Test Product - $9.99')).toBeNull();
+    expect(queryByText('Test Product - $9.99 - 1')).toBeNull();
   });
 
   it('should calculate total amount correctly', async () => {
@@ -80,10 +95,52 @@ describe('CartContext', () => {
 
     fireEvent.press(addButton);
 
-    expect(getByText('Total: $9.99')).toBeTruthy();
+    expect(getByText('Test Product - $9.99 - 1')).toBeTruthy();
 
     fireEvent.press(addButton);
 
     expect(getByText('Total: $19.98')).toBeTruthy();
+  });
+
+  it('should increment the quantity correctly', async () => {
+    const {getByText, queryByText} = render(
+      <CartContextProvider>
+        <TestComponent />
+      </CartContextProvider>,
+    );
+
+    const addButton = getByText('Add Item');
+    const incrementQuantityButton = getByText('Increment Quantity');
+
+    fireEvent.press(addButton);
+
+    expect(getByText('Test Product - $9.99 - 1')).toBeTruthy();
+
+    fireEvent.press(incrementQuantityButton);
+
+    expect(queryByText('Test Product - $9.99 - 2')).toBeTruthy();
+  });
+
+  it('should decrement the quantity correctly', async () => {
+    const {getByText, queryByText} = render(
+      <CartContextProvider>
+        <TestComponent />
+      </CartContextProvider>,
+    );
+
+    const addButton = getByText('Add Item');
+    const decrementQuantityButton = getByText('Decrement Quantity');
+
+    fireEvent.press(addButton);
+
+    expect(getByText('Test Product - $9.99 - 1')).toBeTruthy();
+
+    fireEvent.press(addButton);
+
+    expect(getByText('Test Product - $9.99 - 2')).toBeTruthy();
+
+    fireEvent.press(decrementQuantityButton);
+
+    expect(queryByText('Test Product - $9.99 - 1')).toBeTruthy();
   });
 });

@@ -6,6 +6,8 @@ interface CartContextType {
   cartTotal: string;
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
+  incrementQuantity: (id: string) => void;
+  decrementQuantity: (id: string) => void;
 }
 
 export const CartContext = createContext<CartContextType | undefined>(
@@ -33,6 +35,24 @@ export const CartContextProvider = ({children}: {children: ReactNode}) => {
     });
   };
 
+  const incrementQuantity = (itemId: string) => {
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.id === itemId ? {...item, quantity: item.quantity + 1} : item,
+      ),
+    );
+  };
+
+  const decrementQuantity = (itemId: string) => {
+    setCartItems(prevItems =>
+      prevItems.map(item =>
+        item.id === itemId && item.quantity > 1
+          ? {...item, quantity: item.quantity - 1}
+          : item,
+      ),
+    );
+  };
+
   const removeFromCart = (id: string) => {
     setCartItems(prevCartItems => prevCartItems.filter(item => item.id !== id));
   };
@@ -46,7 +66,14 @@ export const CartContextProvider = ({children}: {children: ReactNode}) => {
 
   return (
     <CartContext.Provider
-      value={{cartItems, addToCart, removeFromCart, cartTotal}}>
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        cartTotal,
+        incrementQuantity,
+        decrementQuantity,
+      }}>
       {children}
     </CartContext.Provider>
   );
