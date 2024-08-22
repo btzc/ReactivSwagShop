@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, Image, StyleSheet, ScrollView, View} from 'react-native';
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {Product, ProductOption} from '../../types/product';
+import {Product, ProductOption, ProductVariant} from '../../types/product';
 import {CollectionNativeStackParamList} from '../../navigation/stacks/CollectionNavigator';
 import {Button} from '../../polaris-at-home/Button/Button';
 import {ProductDetailDescription} from './components/ProductDetailDescription/ProductDetailDescription';
@@ -29,9 +29,6 @@ export const ProductDetail = () => {
   const firstAvailableVariant = variants.find(
     variant => variant.availableForSale,
   );
-  const price = firstAvailableVariant?.price || variants[0].price;
-  const availableForSale =
-    firstAvailableVariant?.availableForSale || variants[0].availableForSale;
 
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [currentOption, setCurrentOption] = useState<{
@@ -39,9 +36,23 @@ export const ProductDetail = () => {
     values: string[];
   } | null>(null);
 
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(
+    () => firstAvailableVariant || variants[0],
+  );
+
   const [selectedOptions, setSelectedOptions] = useState(
     () => firstAvailableVariant?.selectedOptions || variants[0].selectedOptions,
   );
+
+  useEffect(() => {
+    const newVariant = variants.find(
+      variant =>
+        JSON.stringify(variant.selectedOptions) ===
+        JSON.stringify(selectedOptions),
+    );
+
+    setSelectedVariant(newVariant!);
+  }, [selectedOptions, variants]);
 
   const openModal = (option: {name: string; values: string[]}) => {
     setCurrentOption(option);
@@ -66,7 +77,7 @@ export const ProductDetail = () => {
       id,
       imageUrl,
       title,
-      price,
+      price: selectedVariant.price,
       quantity,
     } as CartItem;
     addToCart(productToAdd);
@@ -82,7 +93,10 @@ export const ProductDetail = () => {
     <ScrollView contentContainerStyle={styles.container}>
       <Image source={{uri: imageUrl}} style={styles.image} />
       <Text style={styles.title}>{title}</Text>
-      <ProductDetailPrice availableForSale={availableForSale} price={price} />
+      <ProductDetailPrice
+        availableForSale={selectedVariant.availableForSale}
+        price={selectedVariant.price}
+      />
       {options.map(option => (
         <ProductDetailOptionSelector
           key={option.id}
@@ -105,11 +119,11 @@ export const ProductDetail = () => {
         quantity={quantity}
         onIncrease={onIncrease}
         onDecrease={onDecrease}
-        availableForSale={availableForSale}
+        availableForSale={selectedVariant.availableForSale}
       />
       <View style={styles.buttonContainer}>
         <Button
-          disabled={!availableForSale}
+          disabled={!selectedVariant.availableForSale}
           onPress={handleAddToCart}
           text="Add to Cart"
         />
